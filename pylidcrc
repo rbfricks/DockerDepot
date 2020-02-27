@@ -1,0 +1,3 @@
+[dicom]
+path = /data/
+warn = True
