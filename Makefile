@@ -9,9 +9,12 @@ SRC?="${HOME}/memTest"
 
 TF2_FILE= ${HOME}/DockerDepot/TF2_Dockerfile
 DOCKER2=NV_GPU=$(GPU) nvidia-docker
-PYTHON_VERSION2?=3.6
+PYTHON_VERSION2?=3.7
 CUDA_VERSION2?=10.0
 CUDNN_VERSION2?=7
+
+rfn_FILE= ${HOME}/DockerDepot/rfNext_Dockerfile
+
 
 build:
 	docker build -t raflow --build-arg python_version=$(PYTHON_VERSION2) --build-arg cuda_version=$(CUDA_VERSION2) --build-arg cudnn_version=$(CUDNN_VERSION2) -f $(TF2_FILE) .
@@ -22,3 +25,8 @@ bash: build
 dbash: build
 	$(DOCKER2) run -it -d --name=$(CONTNAME) -v $(SRC):/src/workspace -v $(DATA):/data raflow bash
 
+build_next:
+	$(DOCKER2) build -t rtf_next --build-arg python_version=$(PYTHON_VERSION2) --build-arg cuda_version=$(CUDA_VERSION2) --build-arg cudnn_version=$(CUDNN_VERSION2) -f $(rfn_FILE) .
+
+nexttf: build_next
+	$(DOCKER2) run -it -d --name=$(CONTNAME) -v $(SRC):/src/workspace -v $(DATA):/data rtf_next bash
