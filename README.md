@@ -1,3 +1,12 @@
+# Preface for raflow_next containers
+
+This project contains a makefile and dockerfile for using the raflow_next containers. 
+They serve as test environments for Tensorflow 2.1.0, with GPU support, and a vast suite of python packages.
+The packages include various lung-specific or dicom-specific tools. 
+
+This project begins with tensorflow containers. The makefile and dockerfile are based on
+keras project docker tools, which are no longer maintained. Their documentation is repeated below.
+
 # Using Keras via Docker
 
 This directory contains `Dockerfile` to make it easy to get up and running with

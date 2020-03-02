@@ -1,7 +1,8 @@
-ARG cuda_version=10.0
-ARG cudnn_version=7
-ARG USRID
 FROM tensorflow/tensorflow:2.1.0-gpu-py3
+
+ARG USER=docker
+ARG UID=1000
+ARG GID=1000
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       wget && \
@@ -17,16 +18,10 @@ RUN wget --quiet --no-check-certificate https://repo.continuum.io/miniconda/Mini
     rm Miniconda3-4.7.12.1-Linux-x86_64.sh && \
     echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh
 
-# Install Python packages and keras
-ENV NB_USER rtf
-ENV NB_UID 1064369
-
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    chown $NB_USER $CONDA_DIR -R && \
+RUN useradd -m -s /bin/bash -u $UID -N $USER && \
+    chown $USER $CONDA_DIR -R && \
     mkdir -p /src && \
-    chown $NB_USER /src
-	
-USER $NB_USER
+    chown $USER /src
 
 RUN conda config --append channels conda-forge
 RUN conda update conda
@@ -56,7 +51,7 @@ RUN pip install --upgrade pip tensorflow-gpu && \
       && \
     conda clean -yt
 
-ADD pylidcrc /home/keras/.pylidcrc
+ADD pylidcrc /home/${USER}/.pylidcrc
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -64,6 +59,7 @@ ENV LANG=C.UTF-8
 ENV PYTHONPATH='/src/:$PYTHONPATH'
 
 WORKDIR /src/workspace
+#WORKDIR /home/${USER}
 
 EXPOSE 8888
 
