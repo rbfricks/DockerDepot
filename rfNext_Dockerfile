@@ -1,6 +1,7 @@
 ARG cuda_version=10.0
 ARG cudnn_version=7
-FROM tensorflow/tensorflow:devel-gpu
+ARG USRID
+FROM tensorflow/tensorflow:2.1.0-gpu-py3
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       wget && \
@@ -25,8 +26,6 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p /src && \
     chown $NB_USER /src
 	
-#     chown $NB_USER $CONDA_DIR -R && \
-
 USER $NB_USER
 
 RUN conda config --append channels conda-forge
