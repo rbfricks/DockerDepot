@@ -1,6 +1,6 @@
 ARG cuda_version=10.0
 ARG cudnn_version=7
-FROM tensorflow/tensorflow:devel-gpu-py3
+FROM tensorflow/tensorflow:devel-gpu
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       wget && \
@@ -17,7 +17,7 @@ RUN wget --quiet --no-check-certificate https://repo.continuum.io/miniconda/Mini
     echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh
 
 # Install Python packages and keras
-ENV NB_USER keras
+ENV NB_USER rtf
 ENV NB_UID 1064369
 
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
