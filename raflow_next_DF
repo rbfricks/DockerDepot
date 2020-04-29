@@ -29,6 +29,7 @@ RUN pip install --upgrade pip tensorflow-gpu && \
     pip install \
       sklearn_pandas \
 	  albumentations \
+	  tensorflow-addons \
 	  dicom-contour \
       pylidc && \
     conda install \
