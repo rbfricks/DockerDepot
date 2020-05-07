@@ -45,12 +45,17 @@ RUN pip install --upgrade pip tensorflow-gpu && \
       pygpu \
 	  opencv \
       pyyaml \
+	  seaborn \
       scikit-learn \
+	  scikit-image \
 	  setuptools \
 	  six \
       mkdocs \
       && \
+	  conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch && \
     conda clean -yt
+
+
 
 ADD pylidcrc /home/${USER}/.pylidcrc
 

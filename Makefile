@@ -3,7 +3,7 @@ help:
 
 CONTNAME?="rbf9_CVX"
 
-SRC?="${HOME}/COVIX"
+SRC?="${HOME}/RepChex"
 
 DATA?="/data/usr/rbf9/ChestX/images"
 TFR?="/data/usr/rbf9/ChestX/TFR"
@@ -23,8 +23,8 @@ build_next:
 	$(DOCKER) build -t raflow_next --build-arg USER=$(Name) --build-arg UID=$(UsrID) --build-arg GID=$(GrpID) -f $(rfn_FILE) .
 
 bash: build_next
-	$(DOCKER) run -it --rm --name=$(CONTNAME) -u $(UsrID):$(GrpID) -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
+	$(DOCKER) run -it --rm --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 8G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
 
 dbash: build_next
-	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
+	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 8G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
 
