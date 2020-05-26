@@ -3,10 +3,14 @@ help:
 
 CONTNAME?="rbf9_CVX"
 
-SRC?="${HOME}/RepChex"
+SRC?="${HOME}/COVIX"
 
 DATA?="/data/usr/rbf9/ChestX/images"
 TFR?="/data/usr/rbf9/ChestX/TFR"
+
+RSNAP?="/data/usr/rbf9/RSNAP"
+COVID?="/data/usr/rbf9/COVID"
+Phase2?="/data/usr/rbf9/Phase2"
 
 DOCKER=NV_GPU=$(GPU) nvidia-docker
 GPU?=0
@@ -23,8 +27,11 @@ build_next:
 	$(DOCKER) build -t raflow_next --build-arg USER=$(Name) --build-arg UID=$(UsrID) --build-arg GID=$(GrpID) -f $(rfn_FILE) .
 
 bash: build_next
-	$(DOCKER) run -it --rm --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 8G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
+	$(DOCKER) run -it --rm --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 16G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
 
 dbash: build_next
-	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 8G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
+	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 16G -v $(SRC):/src/workspace -v $(DATA):/data -v $(TFR):/TFR raflow_next bash
+	
+prep: build_next
+	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 16G -v $(SRC):/src/workspace -v $(DATA):/data -v $(RSNAP):/RSNAP -v $(COVID):/COVID -v $(Phase2):/Phase2 raflow_next bash
 

@@ -56,7 +56,6 @@ RUN pip install --upgrade pip tensorflow-gpu && \
     conda clean -yt
 
 
-
 ADD pylidcrc /home/${USER}/.pylidcrc
 
 ENV LC_ALL=C.UTF-8
