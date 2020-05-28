@@ -39,6 +39,7 @@ RUN pip install --upgrade pip tensorflow-gpu && \
       mkl \
       nose \
       notebook \
+	  GDCM \
       Pillow \
       pandas \
       pydot \
