@@ -10,6 +10,8 @@ RSNAP?="/data/usr/rbf9/RSNAP"
 COVID?="/data/usr/rbf9/COVID"
 Phase2?="/data/usr/rbf9/Phase2"
 
+qualt?="${HOME}/QualityScoreCT"
+
 DOCKER=NV_GPU=$(GPU) nvidia-docker
 GPU?=0,1
 
@@ -33,3 +35,5 @@ dbash: build_next
 prep: build_next
 	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 16G -v $(SRC):/src/workspace -v $(CHESTX):/ChestX -v $(RSNAP):/RSNAP -v $(COVID):/COVID -v $(Phase2):/Phase2 raflow_next bash
 
+qual: build_next
+	$(DOCKER) run -it -d --name=$(CONTNAME) -u $(UsrID):$(GrpID) --shm-size 16G -v $(qualt):/src/workspace raflow_next bash

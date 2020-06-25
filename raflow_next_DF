@@ -31,6 +31,7 @@ RUN pip install --upgrade pip tensorflow-gpu && \
 	  albumentations \
 	  tensorflow-addons \
 	  dicom-contour \
+	  xgboost \
       pylidc && \
     conda install \
       bcolz \
@@ -54,6 +55,7 @@ RUN pip install --upgrade pip tensorflow-gpu && \
       mkdocs \
       && \
 	  conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch && \
+ 	  conda install -c conda-forge shap && \
     conda clean -yt
 
 
